@@ -1,16 +1,15 @@
 function FindProxyForURL(url, host) {
-    // 1. Сначала проверяем, не является ли это локальным адресом
+    // Пропускаем локальные адреса напрямую
     if (isPlainHostName(host) || shExpMatch(host, "*.local")) {
         return "DIRECT";
     }
 
-    // 2. Если заходим на nz.ua (любым протоколом)
+    // Если идем на нз
     if (dnsDomainIs(host, "nz.ua") || shExpMatch(host, "*.nz.ua")) {
-        // Возвращаем прокси. 
-        // Важно: если mitmproxy выключен, DIRECT позволит интернету работать.
-        return "PROXY 192.168.1.26:8080; DIRECT";
+        // Мы пишем HTTPS прокси первым. Даже если mitmproxy обычный, 
+        // это заставит macOS использовать метод CONNECT, который сохранит замочек.
+        return "HTTPS 192.168.1.26:8080; PROXY 192.168.1.26:8080; DIRECT";
     }
 
-    // 3. Всё остальное — напрямую
     return "DIRECT";
 }
