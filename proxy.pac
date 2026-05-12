@@ -8,7 +8,7 @@ function FindProxyForURL(url, host) {
     if (dnsDomainIs(host, "nz.ua") || shExpMatch(host, "*.nz.ua")) {
         // Мы пишем HTTPS прокси первым. Даже если mitmproxy обычный, 
         // это заставит macOS использовать метод CONNECT, который сохранит замочек.
-        return "HTTPS 192.168.1.26:8080; PROXY 192.168.1.26:8080; DIRECT";
+        return "PROXY 192.168.1.26:8080; DIRECT";
     }
 
     return "DIRECT";
