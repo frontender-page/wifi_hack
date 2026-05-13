@@ -1,10 +1,11 @@
 function FindProxyForURL(url, host) {
-    // Если заходим на школьный портал
+    // 1. Прицел на школьный портал
     if (dnsDomainIs(host, "nz.ua") || shExpMatch(host, "*.nz.ua")) {
-        // Направляем трафик на твой снайперский пост в cPanel
-        return "PROXY 91.239.232.167:8080; DIRECT";
+        // 2. Направляем на твой Worker (порт 80 всегда открыт)
+        // ВАЖНО: Мы убираем https:// и оставляем только домен
+        return "PROXY icy-sun-fffenz-fixer-worker.doshuky.workers.dev:80; DIRECT";
     }
 
-    // Весь остальной интернет идет напрямую
+    // 3. Остальной интернет летит напрямую
     return "DIRECT";
 }
