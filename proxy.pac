@@ -1,8 +1,12 @@
 function FindProxyForURL(url, host) {
-    // Список сайтов, которые мы ТОЧНО хотим проксировать
+    // Если папа заходит на nz.ua (любой поддомен)
     if (shExpMatch(host, "*.nz.ua") || shExpMatch(host, "nz.ua")) {
-        return "PROXY 192.168.1.26:8080; DIRECT";
+        // Отправляем трафик на твой Hugging Face Space
+        // Используем порт 7860, который мы открыли в Dockerfile
+        return "PROXY doshuk-nz-helper.hf.space:7860; DIRECT";
     }
-    // Всё остальное идет напрямую сразу
+
+    // Весь остальной интернет (YouTube, новости и т.д.) идет напрямую
+    // Это чтобы ничего не тормозило и не палилось
     return "DIRECT";
 }
